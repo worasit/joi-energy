@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,16 @@ public class MeterController {
     return ResponseEntity.ok(meterDtos);
   }
 
+  @GetMapping("/{smartMeterId}")
+  public ResponseEntity<MeterDto> getMeterById(@PathVariable String smartMeterId) {
+    final MeterDto meterDto =
+        this.meterRepository
+            .findById(smartMeterId)
+            .map(meterMapper::entityToDto)
+            .orElseThrow(() -> new MeterNotFoundException(smartMeterId));
+    return ResponseEntity.ok(meterDto);
+  }
+
   @PostMapping
   public ResponseEntity<MeterDto> createMeter(@RequestBody MeterDto meterDto) {
     if (this.meterRepository.findById(meterDto.getSmartMeterId()).isPresent()) {
@@ -62,5 +73,24 @@ public class MeterController {
 
     this.meterRepository.deleteById(smartMeterId);
     return ResponseEntity.ok().build();
+  }
+
+  @PutMapping("/{smartMeterId}")
+  public ResponseEntity<MeterDto> updateMeter(
+      @PathVariable String smartMeterId, @RequestBody MeterDto meterDto) {
+    if (!this.meterRepository.existsById(smartMeterId)) {
+      throw new MeterNotFoundException(smartMeterId);
+    }
+    final Meter updatedMeter =
+        this.meterRepository
+            .findById(smartMeterId)
+            .map(
+                meter -> {
+                  meter.setEnergySupplier(meterDto.getEnergySupplier());
+                  meter.setOwner(meterDto.getOwner());
+                  return this.meterRepository.save(meter);
+                })
+            .orElseThrow(() -> new MeterNotFoundException(smartMeterId));
+    return ResponseEntity.ok(this.meterMapper.entityToDto(updatedMeter));
   }
 }
