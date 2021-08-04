@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import uk.tw.energy.joienergy.domain.ElectricityReading;
 
 @Service
@@ -16,5 +17,9 @@ public class MeterReadingService {
 
   public Optional<List<ElectricityReading>> getReadings(String smartMeterId) {
     return Optional.ofNullable(this.meterAssocaitedReadings.get(smartMeterId));
+  }
+
+  public void storeReading(String smartMeterId, List<ElectricityReading> electricityReadings) {
+    throw new NotImplementedException();
   }
 }

@@ -24,6 +24,6 @@ public class MeterReadingController {
     return this.meterReadingService
         .getReadings(smartMeterId)
         .map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.badRequest().build());
+        .orElseGet(() -> ResponseEntity.notFound().build());
   }
 }
