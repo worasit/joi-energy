@@ -30,4 +30,26 @@ class MeterMapperTest {
     assertThat(meter.getOwner()).isEqualTo(expectedOwner);
     assertThat(meter.getSmartMeterId()).isEqualTo(expectedSmartMeterId);
   }
+
+  @Test
+  void entityToDto() {
+    // Arrange
+    final String expectedOwner = "Sarah";
+    final String expectedSmartMeterId = "smart-meter-0";
+    final String expectedSupplier = EnergySuppliers.DR_EVIL_DARK_ENERGY;
+    final Meter sarahMeter =
+        Meter.builder()
+            .smartMeterId(expectedSmartMeterId)
+            .energySupplier(expectedSupplier)
+            .owner(expectedOwner)
+            .build();
+
+    // Act
+    final MeterDto meter = MeterMapper.INSTANCE.entityToDto(sarahMeter);
+
+    // Assert
+    assertThat(meter.getEnergySupplier()).isEqualTo(expectedSupplier);
+    assertThat(meter.getOwner()).isEqualTo(expectedOwner);
+    assertThat(meter.getSmartMeterId()).isEqualTo(expectedSmartMeterId);
+  }
 }
