@@ -13,11 +13,13 @@ class ElectricityReadingsGeneratorTest {
   void generate() throws NoSuchAlgorithmException {
     // Arrange
     final ElectricityReadingsGenerator generator = new ElectricityReadingsGenerator();
+    final int expectedSize = 6;
 
     // Act
-    final List<ElectricityReading> electricityReadings = generator.generate(5);
+
+    final List<ElectricityReading> electricityReadings = generator.generate(expectedSize);
 
     // Assert
-    assertThat(electricityReadings).hasSize(5);
+    assertThat(electricityReadings).hasSize(expectedSize);
   }
 }

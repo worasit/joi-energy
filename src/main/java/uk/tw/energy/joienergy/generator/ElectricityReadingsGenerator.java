@@ -16,7 +16,7 @@ public class ElectricityReadingsGenerator {
     final SecureRandom secureRandom = SecureRandom.getInstanceStrong();
     final List<ElectricityReading> generatedElectricityReadings =
         new java.util.ArrayList<>(Collections.emptyList());
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < number; i++) {
       final double randomReading = Math.abs(secureRandom.nextGaussian());
       final BigDecimal readings =
           BigDecimal.valueOf(randomReading).setScale(4, RoundingMode.CEILING);
