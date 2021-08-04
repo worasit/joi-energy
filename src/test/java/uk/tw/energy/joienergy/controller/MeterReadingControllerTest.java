@@ -3,12 +3,14 @@ package uk.tw.energy.joienergy.controller;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.tw.energy.joienergy.domain.ElectricityReading;
+import uk.tw.energy.joienergy.domain.MeterReadings;
 import uk.tw.energy.joienergy.service.MeterReadingService;
 
 class MeterReadingControllerTest {
@@ -45,5 +47,19 @@ class MeterReadingControllerTest {
 
     // Assert
     assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+  }
+
+  @Test
+  void givenNoMeterIdIsSuppliedWhenStoringShouldReturnErrorResponse() {
+    // Arrange
+    final MeterReadings meterReadings = new MeterReadings(null, Collections.emptyList());
+    final MeterReadingController meterReadingController = new MeterReadingController(
+        new MeterReadingService(new HashMap<>()));
+
+    // Act
+    final ResponseEntity responseEntity = meterReadingController.storeReadings(meterReadings);
+
+    // Assert
+    assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

@@ -1,14 +1,15 @@
 package uk.tw.energy.joienergy.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import uk.tw.energy.joienergy.domain.ElectricityReading;
 
 @Service
 public class MeterReadingService {
+
   private final Map<String, List<ElectricityReading>> meterAssocaitedReadings;
 
   public MeterReadingService(Map<String, List<ElectricityReading>> meterAssocaitedReadings) {
@@ -20,6 +21,9 @@ public class MeterReadingService {
   }
 
   public void storeReading(String smartMeterId, List<ElectricityReading> electricityReadings) {
-    throw new NotImplementedException();
+    if (!this.meterAssocaitedReadings.containsKey(smartMeterId)) {
+      this.meterAssocaitedReadings.put(smartMeterId, new ArrayList<>());
+    }
+    this.meterAssocaitedReadings.get(smartMeterId).addAll(electricityReadings);
   }
 }
