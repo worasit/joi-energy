@@ -1,8 +1,12 @@
 package uk.tw.energy.joienergy;
 
+import static java.util.Collections.emptyList;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +20,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import uk.tw.energy.joienergy.domain.ElectricityReading;
 import uk.tw.energy.joienergy.domain.EnergySuppliers;
 import uk.tw.energy.joienergy.domain.Meter;
+import uk.tw.energy.joienergy.domain.PricePlan;
 import uk.tw.energy.joienergy.generator.ElectricityReadingsGenerator;
 import uk.tw.energy.joienergy.repository.MeterRepository;
 
@@ -31,6 +36,20 @@ public class SeedingApplication {
 
   public SeedingApplication(@Qualifier("meterRepository") MeterRepository meterRepository) {
     this.meterRepository = meterRepository;
+  }
+
+  @Bean
+  public List<PricePlan> pricePlans() {
+    final List<PricePlan> pricePlans = new ArrayList<>();
+    pricePlans.add(
+        new PricePlan(
+            MOST_EVIL_PRICE_PLAN_ID, "Dr Evil's Dark Energy", BigDecimal.TEN, emptyList()));
+    pricePlans.add(
+        new PricePlan(
+            RENEWABLES_PRICE_PLAN_ID, "The Green Eco", BigDecimal.valueOf(2), emptyList()));
+    pricePlans.add(
+        new PricePlan(STANDARD_PRICE_PLAN_ID, "Power for Everyone", BigDecimal.ONE, emptyList()));
+    return pricePlans;
   }
 
   @Bean
