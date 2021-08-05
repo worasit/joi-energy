@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +21,7 @@ import uk.tw.energy.joienergy.service.PricePlanService;
 
 @RestController
 @RequestMapping("/price-plans")
+@Validated
 public class PricePlanComparatorController {
 
 
@@ -52,7 +56,7 @@ public class PricePlanComparatorController {
   @GetMapping("/recommend/{smartMeterId}")
   public ResponseEntity<Map<String, BigDecimal>>
   recommendCheapestPricePlans(@PathVariable String smartMeterId,
-      @RequestParam(name = "limit", required = false) Integer limit) {
+      @RequestParam(name = "limit", required = false) @Min(1) @Max(3) Integer limit) {
 
     final Map<String, BigDecimal> pricePlans = pricePlanService
         .getConsumptionCostOfElectricityReadingsForEachPricePlan(smartMeterId)
