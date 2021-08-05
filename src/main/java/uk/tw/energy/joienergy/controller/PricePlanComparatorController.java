@@ -8,6 +8,8 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +40,7 @@ public class PricePlanComparatorController {
 
   @GetMapping("/compare-all/{smartMeterId}")
   public ResponseEntity<Map<String, Object>> calculatedCostForEachPricePlan(
-      @PathVariable String smartMeterId) {
+      @PathVariable @NotBlank @NotNull String smartMeterId) {
     final String pricePlanId = accountService
         .getPricePlanIdForSmartMeterId(smartMeterId);
 
