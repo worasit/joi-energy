@@ -15,5 +15,15 @@
 
 
 1. MVP - sending usage data through, convert to a cost and show lowest tariffs
+        - readings/read/:smartMeterId
+        - modify to filter min reading and return
 2. Add on peak and off peak pricing and messaging
+    - modify PricePlan to have a state peekOn when calling get price
+    - modify PricePlanService to have a method to get PeakPrice
+        - if not present -> return as is
+        - if present -> return peekPrice: 9xx.00
 v3 - Add on Gas and Dual fuel tariffs
+       - Modify the PricePlan service to have a method
+       - createPricePlan
+       - getAllPricePlan
+       - Modify PricePlanController with new endpoint
