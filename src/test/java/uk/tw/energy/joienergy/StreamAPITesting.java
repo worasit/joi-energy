@@ -2,12 +2,13 @@ package uk.tw.energy.joienergy;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class StreamAPITesting {
@@ -15,6 +16,24 @@ public class StreamAPITesting {
   List<Product> productList = Arrays.asList(new Product(23, "potatoes"),
       new Product(14, "orange"), new Product(13, "lemon"),
       new Product(23, "bread"), new Product(13, "sugar"));
+
+
+  Map<String, List<Product>> productByCompany = new HashMap<>();
+
+  @BeforeEach
+  void setUp() {
+    productByCompany.put("BigC", Arrays.asList(
+        new Product(10, "soap"),
+        new Product(33, "rice")));
+
+    productByCompany.put("Lotus", Arrays.asList(
+        new Product(20, "soap"),
+        new Product(31, "rice")));
+
+    productByCompany.put("Makro", Arrays.asList(
+        new Product(22, "soap"),
+        new Product(29, "rice")));
+  }
 
   @Test
   void getName() {
@@ -80,5 +99,25 @@ public class StreamAPITesting {
     collect.forEach((aBoolean, products) -> System.out.println(
         aBoolean.toString() + " : " + products.stream().map(Product::getName)
             .collect(Collectors.joining(",", "[", "]"))));
+  }
+
+  @Test
+  void findBestCheapestRiceStore() {
+    final String bestRicePriceCompany = findCheapestStore("soap");
+    System.out.println(bestRicePriceCompany);
+  }
+
+
+  private String findCheapestStore(String productName) {
+    final Product minRicePrice = productByCompany.values().stream()
+        .flatMap(List::stream)
+        .filter(product -> product.getName().equals(productName))
+        .min(Comparator.comparing(Product::getPrice))
+        .get();
+
+    return productByCompany.entrySet().stream()
+        .filter(stringListEntry -> stringListEntry.getValue().contains(minRicePrice))
+        .map(Entry::getKey)
+        .findFirst().orElse("NOT FOUND");
   }
 }
