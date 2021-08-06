@@ -6,6 +6,7 @@
 5. Service to process business logic
 6. RESTful API use HTTP method with plural
 7. Functional programming(Stream API)
+    - immutable
     - no state
     - no side-effect
     - optional with handling of orElse() (Monad)
