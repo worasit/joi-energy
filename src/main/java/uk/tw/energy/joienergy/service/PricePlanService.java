@@ -25,6 +25,14 @@ public class PricePlanService {
     this.meterReadingService = meterReadingService;
   }
 
+  public void createNewPricePlanTariff(PricePlan pricePlan) {
+    this.pricePlans.add(pricePlan);
+  }
+
+  public Optional<List<PricePlan>> getAllPricePlanTariff() {
+    return Optional.ofNullable(this.pricePlans);
+  }
+
   public Optional<Map<String, BigDecimal>> getConsumptionCostOfElectricityReadingsForEachPricePlan(
       String smartMeterId) {
     final List<ElectricityReading> electricityReadings = getElectricityReadings(smartMeterId);
