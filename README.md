@@ -7,6 +7,7 @@
 6. RESTful API use HTTP method with plural
 7. Functional programming(Stream API)
     - no state
-    - optional with handling of orElse()
+    - no side-effect
+    - optional with handling of orElse() (Monad)
     - concise
 8. Error handling
