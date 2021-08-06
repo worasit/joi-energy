@@ -59,7 +59,6 @@ public class MeterController {
     if (this.meterRepository.findById(meterDto.getSmartMeterId()).isPresent()) {
       throw new MeterDuplicatedException(meterDto.getSmartMeterId());
     }
-
     final Meter meter = this.meterMapper.dtoToEntity(meterDto);
     final MeterDto newMeterDto = this.meterMapper.entityToDto(meterRepository.save(meter));
     return ResponseEntity.status(HttpStatus.CREATED).body(newMeterDto);
