@@ -77,7 +77,6 @@ public class PricePlanComparatorController {
         .orElseThrow(() -> new MeterNotFoundException(smartMeterId));
 
     final LinkedHashMap<String, BigDecimal> sortedMap = new LinkedHashMap<>();
-
     comparedPricePlan.entrySet().stream()
         .sorted(Map.Entry.comparingByValue())
         .forEachOrdered(stringBigDecimalEntry ->

@@ -107,6 +107,9 @@ public class StreamAPITesting {
     System.out.println(bestRicePriceCompany);
   }
 
+  @Test
+  void name() {
+  }
 
   private String findCheapestStore(String productName) {
     final Product minRicePrice = productByCompany.values().stream()
