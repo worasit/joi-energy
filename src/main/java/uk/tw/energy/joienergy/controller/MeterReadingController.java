@@ -1,6 +1,9 @@
 package uk.tw.energy.joienergy.controller;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,4 +51,13 @@ public class MeterReadingController {
         .map(ResponseEntity::ok)
         .orElseGet(() -> ResponseEntity.notFound().build());
   }
+
+  // TODO: Solution 1
+//  @GetMapping("/read/{smartMeterId}")
+//  public ResponseEntity readReadings(@PathVariable String smartMeterId) {
+//    Optional<List<ElectricityReading>> readings = meterReadingService.getReadings(smartMeterId);
+//    return readings.isPresent()
+//        ? ResponseEntity.ok(readings.get().stream()
+//        .collect(Collectors.minBy(Comparator.comparing(ElectricityReading::getReading))))
+//        : ResponseEntity.notFound().build();
 }
