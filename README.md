@@ -6,4 +6,7 @@
 5. Service to process business logic
 6. RESTful API use HTTP method with plural
 7. Functional programming(Stream API)
+    - no state
+    - optional with handling of orElse()
+    - concise
 8. Error handling
